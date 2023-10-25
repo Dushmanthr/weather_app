@@ -1,23 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home/Home';
+import Login from './pages/Login';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<Login onLogin={() => setIsAuthenticated(true)} />} />
+          <Route
+            path="/"
+            element={
+              // <ProtectedRoute isAuth={isAuthenticated} redirectPath="/login">
+                <Home />
+              // </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
